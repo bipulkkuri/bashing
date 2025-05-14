@@ -31,3 +31,6 @@ done
 
 echo "✅ Installation complete."
 
+echo "⭐️ Thank you for installing! Want to contribute?"
+echo "Fork or star the repo: https://github.com/bipulkkuri/bashing"
+echo

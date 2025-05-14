@@ -11,6 +11,7 @@ random "${ar[@]}"
 echo  ""
 random 1 2 3 4 5 6 7 8 9 10
 
+echo  ""
 echo  "Reverse"
 ar=(red green blue yellow brown)
 arrayreverse "${ar[@]}"

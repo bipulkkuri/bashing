@@ -5,94 +5,131 @@ source ./string.sh
  
 str="hello world"
 
+myline(){ 
+echo ""
+echo "---------------"
+echo ""
+
+}
+
+echo "to upper  $str"
 upper "$str"
-
-echo  ""
-
+myline
+echo "to lower $str"
 lower "$str"
+myline
 
-echo  ""
-
+echo "to capitalize first letter $str"
 capitalize "$str"
+myline
 
-echo  ""
-echo  "Tile "
+
+echo  "Tile $str"
 title "$str"
+myline
 
-echo  ""
+
+echo "reverse $str"
 reverse "$str"
+myline
 
+
+
+echo "reverseallcase $str"
 str="Hello world"
-echo  ""
 reverseallcase "$str"
+myline
+
 str="hello world"
-
-echo  ""
+echo "strip all char param from $str"
 stripall "$str" " "
+myline
 
 
-echo  ""
+echo "strip whitespace $str"
 strip "$str"  
+myline
 
 
-echo  ""
-lstrip "$str"  
+echo "Left strip whitespace $str"
+lstrip "$str" 
+myline 
 
-echo  ""
+ 
+echo "Right strip whitespace $str"
 rstrip "$str"  
+myline
 
-echo  ""
+ 
+echo "startswith hello $str"
 startswith "$str" "hello" 
+myline
 
-echo  ""
+echo "endswith world in $str"
 endswith "$str" "world"
+myline
 
-echo  ""
+echo "find world in $str" 
 find "$str" "world"
+myline
 
-echo  ""
+echo "replace world with shell in $str" 
 replace "$str" "world" "shell"
+myline
 
-echo  ""
+str="hello world world"
+echo "count occurances of world in  $str"
 count "$str"  "world"
+myline
 
-echo  "" 
+str="hello world"
+echo "isalpha $str" 
 isalpha "$str"   
+myline
 
-
-echo  ""
+echo "isdigit $str"
 isdigit "$str"  
+myline
 
 str="1234"
 echo  "is num "
 isalnum "$str"  
+myline
 
 str="hello world"
 echo  "isspace $str"
 isspace "$str"  
 str="\n\t\r"
 echo  "isspace $str"
+myline
 
 str="hello world"
-echo  ""
+echo "islower $str"
 islower "$str"  
+myline
 
 str="HELLO WORLD"
-echo  ""
+echo "isupper $str"
 isupper "$str"  
+myline
 
 declare -a results
 str="tom,dick,harry"
-echo  ""
+echo "split in array $str"
 split "$str" ","
 echo "${results[@]}" ""
+myline
 
-
+echo "reverse split in array $str"
 echo $(rsplit "$str" ",")
-
+myline
 
 str="https://github.com/bipulkkuri/"
+echo "Encode: $str"
 encoded=$(urlencode $str)
-echo "Encoded: $encoded"
+echo "Encoded: $str"
+myline
 
+echo "deccoded: $encoded"
 urldecode "$encoded"
+myline

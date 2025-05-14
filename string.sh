@@ -36,12 +36,12 @@
 # Removes leading and trailing whitespace from the input string.
 # Example: strip "  hello  " -> "hello"
 
-# lstrip(string, pattern)
-# Removes leading occurrences of the specified pattern from the input string.
+# lstrip(string)
+# Removes leading occurrences of whitespace from the input string.
 # Example: lstrip "hello world" "he" -> "llo world"
 
 # rstrip(string, pattern)
-# Removes trailing occurrences of the specified pattern from the input string.
+# Removes trailing occurrences of whitespace from the input string.
 # Example: rstrip "hello world" "ld" -> "hello wor"
 
 # startswith(string, prefix)
@@ -94,10 +94,7 @@
 
 # rsplit(string, separator)
 # Splits the input string from the right using the specified separator.
-# Example: rsplit "hello,world,again" "," -> ["again", "world", "hello"]
-
-# splitlines(string)
-# Splits the input string at line breaks. (Currently not implemented)
+# Example: rsplit "tom,dick,harry" "," -> [mot kcid yrrah]
 
 # urlencode(string)
 # Encodes the input string for use in a URL.
@@ -151,13 +148,13 @@ reverse() {
 reverseallcase() {
 	local input="$1"
 	local flipped=""
-
+	local char
 	for ((i = 0; i < ${#input}; i++)); do
-		char="${input:$i:1}"
+		char="${input:i:1}"
 		if [[ "$char" =~ [A-Z] ]]; then
-			flipped+="${char,}" # Convert to lowercase
+			flipped+="${char,,}" # Convert to lowercase
 		elif [[ "$char" =~ [a-z] ]]; then
-			flipped+="${char^}" # Convert to uppercase
+			flipped+="${char^^}" # Convert to uppercase
 		else
 			flipped+="$char" # Leave non-letters unchanged
 		fi
@@ -348,11 +345,7 @@ rsplit() {
 	done
 	echo
 }
-
-# Splits at line breaks.
-splitlines() {
-	printf ""
-}
+ 
 
 urlencode() {
 	# Usage: urlencode "string"
