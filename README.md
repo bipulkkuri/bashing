@@ -6,6 +6,10 @@ Scripte are grouped in following sets as per their operations
 - Strings operations
 - Collections ,set array operations
 
+## Documentation
+
+- Strings [`string`](https://github.com/bipulkkuri/bashing/blob/main/string.sh#L7-L105).
+- Collections [`collection`](https://github.com/bipulkkuri/bashing/blob/main/collection.sh#L7-L20).
 
 ## Install
 
