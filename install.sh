@@ -5,7 +5,7 @@ INSTALL_PATH="/usr/local/bin"
 GITHUB_USER="bipulkkuri"
 REPO_NAME="bashing"
 BRANCH="main"
-SCRIPT_NAMES=("string" "collection")
+SCRIPT_NAMES=("string" "collection" "netprobe")
 
 # === INSTALL ===
 echo "Installing scripts to $INSTALL_PATH..."
