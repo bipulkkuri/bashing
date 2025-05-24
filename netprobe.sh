@@ -16,14 +16,35 @@ run_ping(){
     pline "ping $host"     
     ping -c 5 $host  && echo "✅ ping Connection successful" || echo "❌ ping Connection failed"  
 }
+ 
 
 run_traceroute(){
     local host=$1 
     local port=${2:-80}   
+    local max_hops=30 
+    consecutive_limit=3
     pline "Traceroute $host $port"
-              
-    traceroute -p $port  $host &&  echo "✅ traceroute Connection successful" || echo "❌ traceroute Connection failed"  
+
+    consecutive_count=0
+
+    # Run traceroute and read line-by-line in real time
+    traceroute -m $max_hops -p $port "$host" | while IFS= read -r line; do
+    echo "$line"  # print output immediately
+
+    # Check if line is a hop with all no reply stars
+    if echo "$line" | grep -qE '^\s*[0-9]+\s+\* \* \*'; then
+        ((consecutive_count++))
+        if ((consecutive_count >= consecutive_limit)); then
+        echo "❌ traceroute: $consecutive_count consecutive hops with no reply failed"
+        return 1 
+        fi
+    else
+        consecutive_count=0
+    fi
+    done
+   echo "✅ traceroute Connection successful"
 }
+
 
 run_dns(){
     local host=$1 

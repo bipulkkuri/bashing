@@ -2,7 +2,7 @@
 
 # === CONFIG ===
 INSTALL_PATH="/usr/local/bin"
-SCRIPT_NAMES=("string" "collection")
+SCRIPT_NAMES=("string" "collection" "netprobe" "gitguess")
 
 # === UNINSTALL ===
 echo "This will uninstall the following scripts from $INSTALL_PATH:"
