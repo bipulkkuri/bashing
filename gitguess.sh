@@ -116,7 +116,7 @@ DELIM=$'\x1F'  # ASCII unit separator
     if [[ $parents =~ [[:space:]] ]]; then  #
        echo "${magenta}🔀 Detected merge: git merge ${parents// / }"
     fi
-        echo "             git commit -m '$comment'" 
+        echo "             ${green}git commit -m '$comment'${reset}"
  
     echo "${gray}----------------------------------------------------${reset}"
 done

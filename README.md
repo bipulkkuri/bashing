@@ -251,16 +251,30 @@ Age: 73
 ## git guess execution
 ```
 gitguess /ndt7-measurement
-📘 Guessing git commands
+
+📘 Guessing git commands 
 Working on /ndt7-measurement/.git
-🔹 Author: bipulkuri on Date: 2025-05-21 14:06:16 -0400  commitid: cafa0e7236db25af5663b4dd96a18e48383402f2 
+🔹 Commit by: bipulkuri on 2025-05-21 14:06:16 -0400
+🔸 Hash: cafa0e7236db25af5663b4dd96a18e48383402f2
+📛 Refs: refs/heads/main
 🟢 Added:    git add .gitignore LICENSE README.md config.ini ndt7_discover.py ndt7_download.py ndt7_test.py ndt7_upload.py notes.txt requirements.txt
              git commit -m 'first commit'
 ----------------------------------------------------
-🔹 Author: bipulkuri on Date: 2025-05-21 19:23:37 -0400  commitid: 980ac9b284e6b9756211f232ed0c474301c39344 
+🔹 Commit by: bipulkuri on 2025-05-21 19:23:37 -0400
+🔸 Hash: 980ac9b284e6b9756211f232ed0c474301c39344
+📛 Refs: refs/heads/main
+🧬 Parents: cafa0e7236db25af5663b4dd96a18e48383402f2
 🟢 Added:    git add utils.py
 🟡 Modified: git add README.md ndt7_discover.py ndt7_download.py ndt7_test.py ndt7_upload.py notes.txt
              git commit -m 'formatting,refractor support local and prod'
+----------------------------------------------------
+🔹 Commit by: bipulkuri on 2025-05-21 19:34:57 -0400
+🔸 Hash: 6f1ea87debc74f0116f6a2e9caa4fe1aecae0081
+📛 Refs: refs/heads/main
+🧬 Parents: 980ac9b284e6b9756211f232ed0c474301c39344
+🟡 Modified: git add config.ini ndt7_download.py
+             git commit -m 'add discoveryurl'
+----------------------------------------------------
 ```
 
 ## How to include these functions in your scripts after install
