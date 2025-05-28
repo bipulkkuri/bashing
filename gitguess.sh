@@ -8,6 +8,26 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
 
+set -euo pipefail
+# Colors using tput
+bold=$(tput bold)
+reset=$(tput sgr0)
+cyan=$(tput setaf 6)
+green=$(tput setaf 2)
+yellow=$(tput setaf 3)
+red=$(tput setaf 1)
+blue=$(tput setaf 4)
+magenta=$(tput setaf 5)
+gray=$(tput setaf 7)
+
+# Check for repository path argument
+if [[ $# -ne 1 ]]; then
+    echo "${red}❌ Usage:${reset} $0 /path/to/repo"
+    exit 1
+fi
+
+
+
 
 # Declare arrays globally
 added=()
@@ -45,7 +65,7 @@ getfiles() {
                 copied+=("$file -> $newfile")    
                 ;;   
             *)
-                echo "❓ Unknown status '$status' for $file"
+                echo "${magenta}❓ Unknown status '$status' for $file${reset}"
                 ;;    
         esac
     done < <(git --git-dir="${git_repo}"  show --name-status --pretty="" "$commitid")
@@ -54,37 +74,50 @@ getfiles() {
 # Main execution
 repo_path=$1
 git_repo="${repo_path}/.git"
-echo "📘 Guessing git commands"
-echo "Working on ${git_repo}"
+
+if [[ ! -d $git_repo ]]; then
+    echo "${red}❌ Not a valid Git repository:{reset} ${git_repo}"
+    exit 1
+fi
+
+echo "${bold}${cyan}📘 Guessing git commands ${reset}"
+echo "${cyan}Working on${reset} ${git_repo}"
 
 # Use a regular loop (not a pipe, to avoid subshell)
-while IFS= read -r line; do
-    hash=$(echo "$line" | cut -d'|' -f1)
-    author=$(echo "$line" | cut -d'|' -f2)
-    date=$(echo "$line" | cut -d'|' -f3)
-    comment=$(echo "$line" | cut -d'|' -f4-)
-    echo "🔹 Author: $author on Date: $date  commitid: $hash "
+DELIM=$'\x1F'  # ASCII unit separator
+{
+    git --git-dir="${git_repo}" log --all --reverse --pretty=format:"%H${DELIM}%an${DELIM}%ad${DELIM}%s${DELIM}%S${DELIM}%P" --date=iso
+    echo  # handle newline gurantee for IFS
+} | while IFS= read -r line; do
+   
+    IFS=$'\x1F' read -r hash author date comment refs parents<<< "$line"
+    echo "🔹 Commit by: $author on $date"
+    echo "🔸 Hash: $hash"
+    [[ -n "$refs" ]] && echo "📛 Refs: $refs"
+    [[ -n "$parents" ]] && echo "🧬 Parents: $parents"
 
     getfiles "$hash" "$comment"
 
     if [[ ${#added[@]} -gt 0 ]]; then
-        echo "🟢 Added:    git add ${added[*]}"
+        echo "${green}🟢 Added:    git add ${added[*]}${reset}"
     fi
     if [[ ${#modified[@]} -gt 0 ]]; then
-        echo "🟡 Modified: git add ${modified[*]}"
+        echo "${yellow}🟡 Modified: git add ${modified[*]}${reset}"
     fi    
     if [[ ${#deleted[@]} -gt 0 ]]; then
-        echo "🔴 Deleted:  git rm ${deleted[*]}"
+        echo "${red}🔴 Deleted:  git rm ${deleted[*]}${reset}"
     fi  
     if [[ ${#renamed[@]} -gt 0 ]]; then
-        echo "🔵 Renamed:  git mv ${renamed[*]}"
+        echo "${blue}🔵 Renamed:  git mv ${renamed[*]}${reset}"
     fi  
     if [[ ${#copied[@]} -gt 0 ]]; then
-        echo "🔵 Copied:  git add ${copied[*]}"
+        echo "${blue}🔵 Copied:  git add ${copied[*]}${reset}"
     fi  
+    if [[ $parents =~ [[:space:]] ]]; then  #
+       echo "${magenta}🔀 Detected merge: git merge ${parents// / }"
+    fi
         echo "             git commit -m '$comment'" 
  
-    echo "----------------------------------------------------"
-
-done < <(git --git-dir="${git_repo}" log --all --reverse --pretty=format:"%H|%an|%ad|%s" --date=iso)
- 
+    echo "${gray}----------------------------------------------------${reset}"
+done
+  
